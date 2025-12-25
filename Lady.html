@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mensajes Bonitos</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f9d6d5;
+            font-family: Arial, sans-serif;
+            touch-action: manipulation;
+        }
+
+        #boton {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: #ff8fab;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            outline: none;
+        }
+
+        #boton:active {
+            transform: scale(0.95);
+        }
+
+        #corazon {
+            color: red;
+            font-size: 40px;
+        }
+
+        #mensaje {
+            position: fixed;
+            top: 60%;
+            background-color: #ff7987;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: none;
+            font-size: 16px;
+            max-width: 80%;
+            text-align: center;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <button id="boton">
+        <div id="corazon">♥</div>
+    </button>
+    <div id="mensaje"></div>
+
+    <script>
+        const mensajes = [
+            "Eres única",
+            "Eres hermosa sin esfuerzo",
+            "Naturalmente linda",
+            "Me encanta tu forma de ser",
+            "Eres inteligente y segura de sí misma",
+            "Eres increíble",
+            "Bonita por dentro y por fuera",
+            "Tu sonrisa me encanta"
+        ];
+        let indice = 0;
+        let timeoutId = null;
+
+        const boton = document.getElementById('boton');
+        const mensajeDiv = document.getElementById('mensaje');
+
+        boton.addEventListener('click', () => {
+            // Efecto de zoom en el botón
+            boton.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                boton.style.transform = 'scale(1)';
+            }, 200);
+
+            // Si hay un temporizador activo, lo cancelamos
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+
+            // Mostramos el mensaje actual
+            mensajeDiv.textContent = mensajes[indice];
+            mensajeDiv.style.opacity = '1';
+            mensajeDiv.style.display = 'block';
+
+            // Ocultamos el mensaje después de 1 minuto
+            timeoutId = setTimeout(() => {
+                mensajeDiv.style.opacity = '0';
+                setTimeout(() => {
+                    mensajeDiv.style.display = 'none';
+                }, 500);
+            }, 60000); // 60000 milisegundos = 1 minuto
+
+            // Avanzamos al siguiente mensaje
+            indice = (indice + 1) % mensajes.length;
+        });
+    </script>
+</body>
+</html>
+
